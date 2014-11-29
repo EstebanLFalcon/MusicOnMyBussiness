@@ -207,6 +207,9 @@
 			   	$user_data = $api->me();
 			   	$user_id = $user_data->id;
 			   	$playlists = $api->getUserPlaylists($user_id);
+			   	
+			   	Session::put('user_id',$user_id);
+
 			   	echo $playlists->items[0]->id;
 			   	foreach ($playlists->items as $playlist) {
 				    echo "<input type='radio' name='playlist' value='" . $playlist->id . "' >" . $playlist->name;

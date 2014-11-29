@@ -11,7 +11,7 @@
 |
 */
 Route::post('/spotifyLogin','SpotifyController@login');
-Route::get('/spotifyLogin','SpotifyController@login');
+Route::post('/spotifySearchTrack','SpotifyController@searchTrack');
 Route::get('/', function()
 {
 	return View::make('index');
