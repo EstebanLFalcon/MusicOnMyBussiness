@@ -30,6 +30,7 @@
 					testAPI();
 					getPages();
 					$('#start-broadcasting').show();
+					spotifySessionCall();
 				} 
 				else
 				{
@@ -54,19 +55,7 @@
 			getPages();
 			$('#logout').show();
 			$('#start-broadcasting').show();
-			$.ajax({
-					type: "POST",
-                    url: "/spotifyLogin",
-					dataType: 'json',
-                    success: function(response){
-                    	//var message = $.parseJSON(response);
-                    	//alert(message.name);
-                    	alert(response.status);
-                    },
-                    failure: function (response) {
-                        alert(response.d);
-                    }
-			});
+			spotifySessionCall();
 		} else if (response.status === 'not_authorized') {
 		  document.getElementById('status').innerHTML = 'Please log ' +
 			'into this app.';
@@ -143,6 +132,21 @@
 				//$('#user').html(pages);
 			});
 		}, 60000);
+	}
+
+		function spotifySessionCall()
+	{
+				$.ajax({
+				type: "POST",
+	            url: "/spotifyLogin",
+	            dataType: "json", 
+	            success: function(response){
+	            	window.location.href = response.authorizeUrl;
+	            },
+	            failure: function (response) {
+	                alert(response.d);
+	            }
+		});
 	}
 	
 </script>
