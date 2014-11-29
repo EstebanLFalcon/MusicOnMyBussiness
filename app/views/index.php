@@ -2,7 +2,7 @@
 <head>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script>
-	var interval;
+
 	$(document).ready(function() {
 		$.ajaxSetup({ cache: true });
 		$.getScript('//connect.facebook.net/en_UK/all.js', function(){
@@ -15,15 +15,9 @@
 		});
 		$('#logout').hide();
 		$('#start-broadcasting').hide();
-		$('#stop-broadcasting').hide();
+
 		$('#start-broadcasting').click(function(){
 			broadcast();
-		});
-		
-		$('#stop-broadcasting').click(function(){
-			$('#stop-broadcasting').hide();
-			$('#start-broadcasting').show();
-			stop();
 		});
 		
 		$('#login').click(function(){
@@ -50,10 +44,6 @@
 			});
 		});
 	});
-	
-	function stop(){
-		window.clearInterval(interval);
-	}
 	
 	function statusChangeCallback(response) {
 		console.log('statusChangeCallback');
@@ -113,9 +103,8 @@
 			alert('choose a page first');
 			return;
 		}
-		$('#stop-broadcasting').show();
-		$('#start-broadcasting').hide();
-		interval = setInterval(function () {
+		
+		setInterval(function () {
 			var newURL = selectedPage + '/tagged';
 			console.log("new url " + newURL);
 			
@@ -143,7 +132,7 @@
 				}
 				//$('#user').html(pages);
 			});
-		}, 30000);
+		}, 60000);
 	}
 
 	function spotifySessionCall()
@@ -185,14 +174,8 @@
 		Start Broadcasting
 	</button>
 </div>
-
-<div id="stop-broadcasting">
-	<button id="stop-button">
-		Stop Broadcasting
-	</button>
-</div>
  	<?php
-
+	
 			if (isset($_GET['code'])) {
 				Session::put('authCode',$_GET['code']);
 				$session = Session::get("spotifySession");
