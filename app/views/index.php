@@ -157,6 +157,23 @@
 </head>
 <body>
 
+<button id="login">Inicia sesion con Facebook
+</button>
+
+<button id="logout">Cerrar sesion
+</button>
+
+<div id="status">
+</div>
+
+<div id="user">
+</div>
+
+<div id="start-broadcasting">
+	<button id="start-button">
+		Start Broadcasting
+	</button>
+</div>
 	
  	<?php
 			if (isset($_GET['code'])) {
