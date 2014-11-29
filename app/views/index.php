@@ -2,7 +2,7 @@
 <head>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script>
-
+	var interval;
 	$(document).ready(function() {
 		$.ajaxSetup({ cache: true });
 		$.getScript('//connect.facebook.net/en_UK/all.js', function(){
@@ -15,11 +15,18 @@
 		});
 		$('#logout').hide();
 		$('#start-broadcasting').hide();
-
+		$('#stop-broadcasting').hide();
 		$('#start-broadcasting').click(function(){
 			broadcast();
 		});
 		
+		$('#stop-broadcasting').click(function(){
+			$('#stop-broadcasting').hide();
+			$('#start-broadcasting').show();
+			stop();
+		});
+
+
 		$('#login').click(function(){
 			FB.login(function(response){
 				if (response.authResponse) 
@@ -45,6 +52,10 @@
 		});
 	});
 	
+	function stop(){
+		window.clearInterval(interval);
+	}
+
 	function statusChangeCallback(response) {
 		console.log('statusChangeCallback');
 		console.log(response);
@@ -113,8 +124,10 @@
 			alert('choose a playlist first');
 			return;
 		}
+		$('#stop-broadcasting').show();
+		$('#start-broadcasting').hide();
 
-		setInterval(function () {
+		interval=setInterval(function () {
 			var newURL = selectedPage + '/tagged';
 			console.log("new url " + newURL);
 			
@@ -135,6 +148,7 @@
 						for (var index=0; index<arraySongArtist.length; index++)
 							arraySongArtist[index]=arraySongArtist[index].trim();
 						jsonToSpotify+="{'song':'"+arraySongArtist[0]+"','artist':'"+arraySongArtist[1]+"'},";
+						//console.log("{'song':'"+arraySongArtist[0]+"','artist':'"+arraySongArtist[1]+"'},");
 						// add song to playlist (post message)
 						FB.api(post1, "DELETE", function(responseDeletePost){
 							if(responseDeletePost.success)
@@ -149,12 +163,13 @@
 					}
 					//pages += "id: " + responsePage.data[j].id + "<br>From: " + responsePage.data[j].from.name + "<br>Message: " + responsePage.data[j].message;
 				}
+				jsonToSpotify=jsonToSpotify.substring(0,jsonToSpotify.length-1);
 				jsonToSpotify+="]}";
 				console.log(jsonToSpotify);
-
+				spotifySearchTracks(jsonToSpotify);
 				//$('#user').html(pages);
 			});
-		}, 60000);
+		}, 10000);
 	}
 
 	function spotifySessionCall()
@@ -163,6 +178,21 @@
 			type: "POST",
 			url: "/spotifyLogin",
 			dataType: "json", 
+			success: function(response){
+				window.location.href = response.authorizeUrl;
+			},
+			failure: function (response) {
+				alert(response.d);
+			}
+		});
+	}
+		function spotifySearchTracks(AddData)
+	{
+		$.ajax({
+			type: "POST",
+			url: "/spotifySearchTrack",
+			dataType: "json",
+			data : AddData,
 			success: function(response){
 				window.location.href = response.authorizeUrl;
 			},
@@ -194,6 +224,12 @@
 <div id="start-broadcasting">
 	<button id="start-button">
 		Start Broadcasting
+	</button>
+
+</div>
+<div id="stop-broadcasting">
+	<button id="stop-button">
+		Stop Broadcasting
 	</button>
 </div>
  	<?php
