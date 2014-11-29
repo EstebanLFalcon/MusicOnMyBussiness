@@ -1,4 +1,4 @@
-<!doctype html>
+
 <html lang="en">
 <head>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
@@ -56,21 +56,23 @@
 			$('#logout').show();
 			$('#start-broadcasting').show();
 			spotifySessionCall();
-		} else if (response.status === 'not_authorized') {
+		} 
+		/*
+		else if (response.status === 'not_authorized') {
 		  document.getElementById('status').innerHTML = 'Please log ' +
 			'into this app.';
 		} else {
 		  document.getElementById('status').innerHTML = 'Please log ' +
 			'into Facebook.';
 		}
+		*/
 	}
 
 	function testAPI() {
 		console.log('Welcome!  Fetching your information.... ');
 		FB.api('/me', function(response) {
 		  console.log('Successful login for: ' + response.name);
-		  document.getElementById('status').innerHTML =
-			'Thanks for logging in, ' + response.name + '!';
+		  document.getElementById('status').innerHTML = 'Thanks for logging in, ' + response.name + '!';
 			
 		});
 	}
@@ -134,18 +136,18 @@
 		}, 60000);
 	}
 
-		function spotifySessionCall()
+	function spotifySessionCall()
 	{
-				$.ajax({
-				type: "POST",
-	            url: "/spotifyLogin",
-	            dataType: "json", 
-	            success: function(response){
-	            	window.location.href = response.authorizeUrl;
-	            },
-	            failure: function (response) {
-	                alert(response.d);
-	            }
+		$.ajax({
+			type: "POST",
+			url: "/spotifyLogin",
+			dataType: "json", 
+			success: function(response){
+				window.location.href = response.authorizeUrl;
+			},
+			failure: function (response) {
+				alert(response.d);
+			}
 		});
 	}
 	
@@ -153,7 +155,6 @@
 
 	<meta charset="UTF-8">
 	<title>Music On My Business</title>
-	<style>
 </head>
 <body>
 
@@ -174,8 +175,8 @@
 		Start Broadcasting
 	</button>
 </div>
-	
  	<?php
+	
 			if (isset($_GET['code'])) {
 				Session::put('authCode',$_GET['code']);
 				$session = Session::get("spotifySession");
@@ -185,6 +186,7 @@
 			    print_r($api->me());
 
 		    }
+			
 	?> 
 </body>
 </html>
