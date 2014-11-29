@@ -166,7 +166,7 @@
 				jsonToSpotify=jsonToSpotify.substring(0,jsonToSpotify.length-1);
 				jsonToSpotify+="]}";
 				console.log(jsonToSpotify);
-				spotifySearchTracks(jsonToSpotify);
+				spotifySearchTracks(JSON.parse(jsonToSpotify));
 				//$('#user').html(pages);
 			});
 		}, 10000);

@@ -14,9 +14,9 @@ class SpotifyController extends BaseController {
 		echo json_encode($return_value);
 	}
 
-	public function searchTrack()
+	public function searchTrack($playlistid,$search_query)
 	{
-		$api = Session:get('api');
+		$api = Session::get('api');
 		$user_id = Session::get('user_id');
 		$search_query = Input::get('search_query');
 		foreach($search_query as $queries)
@@ -26,7 +26,6 @@ class SpotifyController extends BaseController {
 			{
 				foreach($tracks->items as $singleTrack)
 				{
-					forea
 					if($singleTrack.name == $song_name && $singleTrack->artist[0].name == $artist_name)
 					{
 						$api->addUserPlaylistTracks($user_id,$playlist_id, $singleTrack.id);
@@ -37,7 +36,7 @@ class SpotifyController extends BaseController {
 			}
 		}
 		$return_value = [];
-		$return_value['songs_added'] = $$songs_added;
+		$return_value['songs_added'] = $songs_added;
 		echo json_encode($return_value);
 	}
 
