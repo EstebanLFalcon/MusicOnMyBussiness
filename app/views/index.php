@@ -174,12 +174,12 @@
 						//console.log("{'song':'"+arraySongArtist[0]+"','artist':'"+arraySongArtist[1]+"'},");
 						// add song to playlist (post message)
 						
-						FB.api(post1, "DELETE", function(responseDeletePost){
-							if(responseDeletePost.success)
-							{
-								console.log("post borrado: " + postMessage);
-							}
-						});
+						// FB.api(post1, "DELETE", function(responseDeletePost){
+						// 	if(responseDeletePost.success)
+						// 	{
+						// 		console.log("post borrado: " + postMessage);
+						// 	}
+						// });
 					}
 					else
 					{
@@ -227,9 +227,7 @@
 			},
 			success: function(response){
 				//window.location.href = response.authorizeUrl;
-				alert(response.playlist_id);
-				alert(response.song);
-				alert(response.artist);
+				alert(response.songs_added)
 			},
 			failure: function (response) {
 				alert(response.d);
