@@ -175,33 +175,37 @@
 					var postMessage = responsePage.data[j].message;
 					if(postMessage.charAt(0) == '%')
 					{
-						var song = new Object();
-						console.log('paso1.5');
+						var song = new Array();
+						//console.log('paso1.5');
 
 						var post1 = responsePage.data[j].id;
 						var postSongArtist = postMessage.substring(1);
 						var arraySongArtist = postSongArtist.split("-");
 						for (var index=0; index<arraySongArtist.length; index++)
 							arraySongArtist[index]=arraySongArtist[index].trim();
-						console.log('paso1.6');
+						//console.log('paso1.6');
 
 						if(arraySongArtist.length==1)
 						{
-							song.song = arraySongArtist[0];
-							song.artist = "";
+							song[0] = arraySongArtist[0];
+							song[1] = "";
+							song[2] = selectedPlaylist;
 						}
 							//jsonToSpotify+="{'song':'"+arraySongArtist[0]+"','artist':''},";
 						else
 						{
-							song.song = arraySongArtist[0];
-							song.artist = arraySongArtist[1];
+							song[0] = arraySongArtist[0];
+							song[1] = arraySongArtist[1];
+							song[2] = selectedPlaylist;
 						}
-						console.log('paso2');
-						jsonToSpotify.push(song);
-						console.log('paso3');
+						//console.log('paso2');
+						spotifySearchTracks(selectedPlaylist, song[0], song[1]);
+						//jsonToSpotify.push(song);
+						//console.log('paso3');
 							//jsonToSpotify+="{'song':'"+arraySongArtist[0]+"','artist':'"+arraySongArtist[1]+"'},";
 						//console.log("{'song':'"+arraySongArtist[0]+"','artist':'"+arraySongArtist[1]+"'},");
 						// add song to playlist (post message)
+						
 						FB.api(post1, "DELETE", function(responseDeletePost){
 							if(responseDeletePost.success)
 							{
@@ -219,7 +223,7 @@
 				//jsonToSpotify+="]";
 				console.log(jsonToSpotify);
 				//alert(jsonToSpotify);
-				spotifySearchTracks(selectedPlaylist,JSON.parse(JSON.stringify(jsonToSpotify)));
+				//spotifySearchTracks(selectedPlaylist,jsonToSpotify);
 				//$('#user').html(pages);
 			});
 		}, 5000);
@@ -240,7 +244,7 @@
 		});
 	}
 	
-	function spotifySearchTracks(playlist_id,search_query)
+	function spotifySearchTracks(playlist_id, song, artist)
 	{
 		//alert(playlist_id);
 		//alert(search_query);
@@ -250,17 +254,19 @@
 			dataType: "json",
 			data : {
 				playlist_id: playlist_id,
-				search_data : search_query
+				song : song,
+				artist : artist
 			},
 			success: function(response){
 				//window.location.href = response.authorizeUrl;
-				alert(response.songs_added);
+				console.log(response.songs_added);
 			},
 			failure: function (response) {
 				alert(response.d);
 			}
 		});
 	}
+	
 	
 </script>
 
