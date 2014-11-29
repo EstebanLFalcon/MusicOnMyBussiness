@@ -103,19 +103,38 @@
 			alert('choose a page first');
 			return;
 		}
-		
+		var selectedPlaylist;
+		var selected2 = $("input[type='radio'][name='playlist']:checked");
+		if (selected2.length > 0) {
+			selectedPlaylist = selected2.val();
+		}
+		else
+		{
+			alert('choose a playlist first');
+			return;
+		}
+
 		setInterval(function () {
 			var newURL = selectedPage + '/tagged';
 			console.log("new url " + newURL);
 			
 			FB.api(newURL, function(responsePage){
 				var postTotales = responsePage.data.length;
+				var jsonSongs=[];
+				var jsonToSpotify;
+				jsonToSpotify="{'playlistId':'"+selectedPlaylist+"',";
+				jsonToSpotify+="'search_query':[";
 				for (var j = 0; j < postTotales; j++)
 				{
 					var postMessage = responsePage.data[j].message;
 					if(postMessage.charAt(0) == '%')
 					{
 						var post1 = responsePage.data[j].id;
+						var postSongArtist = postMessage.substring(1);
+						var arraySongArtist = postSongArtist.split("-");
+						for (var index=0; index<arraySongArtist.length; index++)
+							arraySongArtist[index]=arraySongArtist[index].trim();
+						jsonToSpotify+="{'song':'"+arraySongArtist[0]+"','artist':'"+arraySongArtist[1]+"'},";
 						// add song to playlist (post message)
 						FB.api(post1, "DELETE", function(responseDeletePost){
 							if(responseDeletePost.success)
@@ -130,6 +149,9 @@
 					}
 					//pages += "id: " + responsePage.data[j].id + "<br>From: " + responsePage.data[j].from.name + "<br>Message: " + responsePage.data[j].message;
 				}
+				jsonToSpotify+="]}";
+				console.log(jsonToSpotify);
+
 				//$('#user').html(pages);
 			});
 		}, 60000);
