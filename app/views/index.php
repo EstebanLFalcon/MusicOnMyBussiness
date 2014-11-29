@@ -169,7 +169,7 @@
 				jsonToSpotify=jsonToSpotify.substring(0,jsonToSpotify.length-1);
 				jsonToSpotify+="]}";
 				console.log(jsonToSpotify);
-				spotifySearchTracks(JSON.parse(jsonToSpotify));
+				spotifySearchTracks(jsonToSpotify);
 				//$('#user').html(pages);
 			});
 		}, 10000);
@@ -195,9 +195,10 @@
 			type: "POST",
 			url: "/spotifySearchTrack",
 			dataType: "json",
-			data : AddData,
+			data : { "parameter" : "dfghbtdfyj" },
 			success: function(response){
-				window.location.href = response.authorizeUrl;
+				//window.location.href = response.authorizeUrl;
+				alert(response);
 			},
 			failure: function (response) {
 				alert(response.d);

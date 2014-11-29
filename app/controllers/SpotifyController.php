@@ -14,31 +14,30 @@ class SpotifyController extends BaseController {
 		echo json_encode($return_value);
 	}
 
-	public function searchTrack($playlistid,$search_query)
+	public function searchTrack($parameter)
 	{
-		$api = Session::get('api');
-		$user_id = Session::get('user_id');
-		$search_query = Input::get('search_query');
-		foreach($search_query as $queries)
-		{
-			$tracks = $api->search($queries.song . ' ' . $queries.artist, 'track');
-			if(isset($tracks))
-			{
-				foreach($tracks->items as $singleTrack)
-				{
-					if($singleTrack.name == $song_name && $singleTrack->artist[0].name == $artist_name)
-					{
-						$api->addUserPlaylistTracks($user_id,$playlist_id, $singleTrack.id);
-						$songs_added = $songs_added + 1;
-					}
+		// $api = Session::get('api');
+		// $user_id = Session::get('user_id');
+		// $search_query = Input::get('parameters');
+		// foreach($search_query as $queries)
+		// {
+		// 	$tracks = $api->search($queries.song . ' ' . $queries.artist, 'track');
+		// 	if(isset($tracks))
+		// 	{
+		// 		foreach($tracks->items as $singleTrack)
+		// 		{
+		// 			if($singleTrack.name == $song_name && $singleTrack->artist[0].name == $artist_name)
+		// 			{
+		// 				$api->addUserPlaylistTracks($user_id,$playlist_id, $singleTrack.id);
+		// 				$songs_added = $songs_added + 1;
+		// 			}
 
-				}
-			}
-		}
+		// 		}
+		// 	}
+		// }
 		$return_value = [];
-		$return_value['songs_added'] = $songs_added;
+		$return_value['songs_added'] = 1;
 		echo json_encode($return_value);
 	}
-
 
 }
