@@ -55,7 +55,7 @@
 			getPages();
 			$('#logout').show();
 			$('#start-broadcasting').show();
-			spotifySessionCall();
+			//spotifySessionCall();
 		} 
 		/*
 		else if (response.status === 'not_authorized') {
@@ -183,8 +183,14 @@
 				$api = Session::get("api");
 			    $session->requestToken(Session::get("authCode"));
 			   	$api->setAccessToken($session->getAccessToken());
-			   	echo $api->me().display_name;
-			    print_r($api->me());
+			   	$user_data = $api->me();
+			   	$user_id = $user_data->id;
+			   	$playlists = $api->getUserPlaylists($user_id);
+			   	echo $playlists->items[0]->id;
+			   	foreach ($playlists->items as $playlist) {
+				    echo $playlist->id . 'name: ' . $playlist->name;
+				    echo '<br>';
+				}
 
 		    }
 			

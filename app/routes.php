@@ -10,10 +10,9 @@
 | and give it the Closure to execute when that URI is requested.
 |
 */
-
+Route::post('/spotifyLogin','SpotifyController@login');
+Route::get('/spotifyLogin','SpotifyController@login');
 Route::get('/', function()
 {
 	return View::make('index');
 });
-
-Route::post('/spotifyLogin','SpotifyController@login');

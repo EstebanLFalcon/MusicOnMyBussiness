@@ -5,6 +5,8 @@
 	"license": "MIT",
 	"type": "project",
 	"require": {
+		"facebook/php-sdk-v4" : "4.0.*",
+		"jwilsson/spotify-web-api-php": "0.6.*",
 		"laravel/framework": "4.2.*"
 	},
 	"autoload": {
