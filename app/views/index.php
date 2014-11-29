@@ -183,6 +183,7 @@
 				$api = Session::get("api");
 			    $session->requestToken(Session::get("authCode"));
 			   	$api->setAccessToken($session->getAccessToken());
+			   	echo $api->me().display_name;
 			    print_r($api->me());
 
 		    }
