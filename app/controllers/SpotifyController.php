@@ -23,19 +23,21 @@ class SpotifyController extends BaseController {
 		$artist = Input::get('artist');
 		$songs_added = 0;
 		$tracks = $api->search($song . ' ' . $artist, 'track');
-		// if(isset($tracks))
-		// {
-		// 	foreach($tracks->items as $singleTrack)
-		// 	{
-		// 		if($singleTrack.name == $song && $singleTrack->artist[0].name == $artist)
-		// 		{
-		// 			$api->addUserPlaylistTracks($user_id,$playlist_id, $singleTrack.id);
-		// 			$songs_added = $songs_added + 1;
-		// 		}
-		// 	}
-		// }
+		if(isset($tracks))
+		{
+			foreach($tracks->tracks->items as $singleTrack)
+			{
+			//	if($singleTrack->name == $song && $singleTrack->artist[0]->name == $artist)
+			//	{
+					$api->addUserPlaylistTracks($user_id,$playlist_id, $singleTrack->id);
+					$songs_added = $songs_added + 1;
+					break;
+				//}
+			}
+			//$api->addUserPlaylistTracks($user_id,$playlist_id, $tracks->tracks->items[0]->id;)
+		}
 		$return_value = [];
-		$return_value['songs_added'] = $tracks->total;
+		$return_value['songs_added'] = $songs_added;
 
 		echo json_encode($return_value);
 	}
