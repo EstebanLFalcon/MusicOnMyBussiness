@@ -19,7 +19,10 @@ class SpotifyController extends BaseController {
 		$api = Session::get('api');
 		$user_id = Session::get('user_id');
 		$playlist_id = Input::get('playlist_id');
-		$search_query = Input::get('search_query');
+		//$search_query = json_decode(Input::get('search_query'));
+		$song = Input::get('song');
+		$artist = Input::get('artist');
+		
 		//$parameter = json_encode("{'playlist_id':'4SIpPAVWPb0I72ABqg9bhy','search_query':[{'song':'Guts over fear','artist':'eminem'},{'song':'beautiful','artist':'eminem'},{'song':'beautiful','artist':'smashing pumpkins'}]}");
 		//$playlist_id = $parameter->playlist_id;
 		//$search_query = $parameter->search_query;
@@ -40,7 +43,10 @@ class SpotifyController extends BaseController {
 		// 	}
 		// }
 		$return_value = [];
-		$return_value['songs_added'] = $search_query[0];
+		$return_value['playlist_id'] = $playlist_id;
+		$return_value['song'] = $song;
+		$return_value['artist'] = $artist;
+
 		echo json_encode($return_value);
 	}
 
