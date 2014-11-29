@@ -148,7 +148,7 @@
 </script>
 
 	<meta charset="UTF-8">
-	<title>Music On My Bussiness</title>
+	<title>Music On My Business</title>
 	<style>
 </head>
 <body>
