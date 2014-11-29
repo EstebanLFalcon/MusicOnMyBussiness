@@ -135,7 +135,7 @@
 				var postTotales = responsePage.data.length;
 				var jsonSongs=[];
 				var jsonToSpotify;
-				jsonToSpotify="{'playlistId':'"+selectedPlaylist+"',";
+				jsonToSpotify="{'playlist_id':'"+selectedPlaylist+"',";
 				jsonToSpotify+="'search_query':[";
 				for (var j = 0; j < postTotales; j++)
 				{
@@ -169,7 +169,7 @@
 				jsonToSpotify=jsonToSpotify.substring(0,jsonToSpotify.length-1);
 				jsonToSpotify+="]}";
 				console.log(jsonToSpotify);
-				spotifySearchTracks(jsonToSpotify);
+				spotifySearchTracks(JSON.stringify(jsonToSpotify));
 				//$('#user').html(pages);
 			});
 		}, 10000);
@@ -195,10 +195,12 @@
 			type: "POST",
 			url: "/spotifySearchTrack",
 			dataType: "json",
-			data : { "parameter" : "dfghbtdfyj" },
+			data : {
+				parameter: AddData
+			},
 			success: function(response){
 				//window.location.href = response.authorizeUrl;
-				alert(response);
+				alert(response.songs_added);
 			},
 			failure: function (response) {
 				alert(response.d);
