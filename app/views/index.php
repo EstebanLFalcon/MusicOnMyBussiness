@@ -134,23 +134,40 @@
 			FB.api(newURL, function(responsePage){
 				var postTotales = responsePage.data.length;
 				var jsonSongs=[];
-				var jsonToSpotify;
-				jsonToSpotify="{'playlist_id':'"+selectedPlaylist+"',";
-				jsonToSpotify+="'search_query':[";
+				var jsonToSpotify = new Array();
+				console.log('paso1');
+				//jsonToSpotify="{'playlist_id':'"+selectedPlaylist+"',";
+				//jsonToSpotify="[";
 				for (var j = 0; j < postTotales; j++)
 				{
 					var postMessage = responsePage.data[j].message;
 					if(postMessage.charAt(0) == '%')
 					{
+						var song = new Object();
+						console.log('paso1.5');
+
 						var post1 = responsePage.data[j].id;
 						var postSongArtist = postMessage.substring(1);
 						var arraySongArtist = postSongArtist.split("-");
 						for (var index=0; index<arraySongArtist.length; index++)
 							arraySongArtist[index]=arraySongArtist[index].trim();
+						console.log('paso1.6');
+
 						if(arraySongArtist.length==1)
-							jsonToSpotify+="{'song':'"+arraySongArtist[0]+"','artist':''},";
-							else
-						jsonToSpotify+="{'song':'"+arraySongArtist[0]+"','artist':'"+arraySongArtist[1]+"'},";
+						{
+							song.song = arraySongArtist[0];
+							song.artist = "";
+						}
+							//jsonToSpotify+="{'song':'"+arraySongArtist[0]+"','artist':''},";
+						else
+						{
+							song.song = arraySongArtist[0];
+							song.artist = arraySongArtist[1];
+						}
+						console.log('paso2');
+						jsonToSpotify.push(song);
+						console.log('paso3');
+							//jsonToSpotify+="{'song':'"+arraySongArtist[0]+"','artist':'"+arraySongArtist[1]+"'},";
 						//console.log("{'song':'"+arraySongArtist[0]+"','artist':'"+arraySongArtist[1]+"'},");
 						// add song to playlist (post message)
 						FB.api(post1, "DELETE", function(responseDeletePost){
@@ -166,13 +183,14 @@
 					}
 					//pages += "id: " + responsePage.data[j].id + "<br>From: " + responsePage.data[j].from.name + "<br>Message: " + responsePage.data[j].message;
 				}
-				jsonToSpotify=jsonToSpotify.substring(0,jsonToSpotify.length-1);
-				jsonToSpotify+="]}";
+				//jsonToSpotify=jsonToSpotify.substring(0,jsonToSpotify.length-1);
+				//jsonToSpotify+="]";
 				console.log(jsonToSpotify);
-				spotifySearchTracks(JSON.stringify(jsonToSpotify));
+				//alert(jsonToSpotify);
+				spotifySearchTracks(selectedPlaylist,JSON.parse(JSON.stringify(jsonToSpotify)));
 				//$('#user').html(pages);
 			});
-		}, 10000);
+		}, 5000);
 	}
 
 	function spotifySessionCall()
@@ -189,14 +207,18 @@
 			}
 		});
 	}
-		function spotifySearchTracks(AddData)
+	
+	function spotifySearchTracks(playlist_id,search_query)
 	{
+		//alert(playlist_id);
+		//alert(search_query);
 		$.ajax({
 			type: "POST",
 			url: "/spotifySearchTrack",
 			dataType: "json",
 			data : {
-				parameter: AddData
+				playlist_id: playlist_id,
+				search_data : search_query
 			},
 			success: function(response){
 				//window.location.href = response.authorizeUrl;
