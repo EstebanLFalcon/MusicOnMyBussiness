@@ -147,6 +147,9 @@
 						var arraySongArtist = postSongArtist.split("-");
 						for (var index=0; index<arraySongArtist.length; index++)
 							arraySongArtist[index]=arraySongArtist[index].trim();
+						if(arraySongArtist.length==1)
+							jsonToSpotify+="{'song':'"+arraySongArtist[0]+"','artist':''},";
+							else
 						jsonToSpotify+="{'song':'"+arraySongArtist[0]+"','artist':'"+arraySongArtist[1]+"'},";
 						//console.log("{'song':'"+arraySongArtist[0]+"','artist':'"+arraySongArtist[1]+"'},");
 						// add song to playlist (post message)
