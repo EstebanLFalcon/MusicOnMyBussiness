@@ -1,4 +1,3 @@
-
 <html lang="en">
 <head>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
@@ -57,7 +56,7 @@
 			$('#start-broadcasting').show();
 			spotifySessionCall();
 		} 
-		/*
+		
 		else if (response.status === 'not_authorized') {
 		  document.getElementById('status').innerHTML = 'Please log ' +
 			'into this app.';
@@ -65,7 +64,7 @@
 		  document.getElementById('status').innerHTML = 'Please log ' +
 			'into Facebook.';
 		}
-		*/
+		
 	}
 
 	function testAPI() {
