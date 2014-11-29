@@ -175,7 +175,7 @@
 	</button>
 </div>
  	<?php
-	
+
 			if (isset($_GET['code'])) {
 				Session::put('authCode',$_GET['code']);
 				$session = Session::get("spotifySession");
