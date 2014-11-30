@@ -352,10 +352,15 @@
 
       <div id="botonfb" class="row featurette">
         <div class="col-md-7">
-          <h2 class="featurette-heading">What's up with this app?. <span class="text-muted">You post it, we play it!.</span></h2>
+          <h3 class="featurette-heading">What's up with this app?. <span class="text-muted">You post it, we play it!.</span></h3>
           <p class="lead">Music on my Business it's a simple web page which helps you to set some music as it were a JukeBox, but 
-            much easier. To set your music up, you only have to connect to facebook and make a post to the business page, automatically
-            the application will recognize the request, and will send it to a playlist on Spotify.</p>
+            much easier. To set your music up, you only need to follow these simple steps:</p>
+          <p class="lead"  style="font-size:14px;">1)Connect to your Facebook Account.</p>
+          <p class="lead"  style="font-size:14px;">2)Connect to your Spotify Account.</p>
+          <p class="lead"  style="font-size:14px;">3)Select your Facebook page.</p>
+          <p class="lead"  style="font-size:14px;">4)Select your Spotify Playlist.</p>
+          <p class="lead"  style="font-size:14px;">5)Press Start Broadcasting.</p>
+          <p class="lead"  ">Once you have finished with these simple steps, you just need to wait for people to request songs in your Facebook page. By posting a song with this format: %Song - Artist.</p>
         </div>
         <div class="col-md-5">
           
@@ -378,21 +383,12 @@
 
 <div id="status">
 </div>
-
-<div id="user">
+<div id="container-pages-playlists">
+<div id="user" class="col-xs-6">
 </div>
 
-<div id="start-broadcasting">
-	<button id="start-button" class="btn btn-info">
-		Start Broadcasting
-	</button>
 
-</div>
-<div id="stop-broadcasting">
-	<button id="stop-button" class="btn btn-success">
-		Stop Broadcasting
-	</button>
-</div>
+<div id="playlist-list" class="col-xs-6">
 
  	<?php
 	
@@ -408,7 +404,7 @@
 			   	
 			   	Session::put('user_id',$user_id);
 
-			   	
+			   	echo "Playlists:<br>";
 			   	foreach ($playlists->items as $playlist) {
 				    echo "<input type='radio' name='playlist' value='" . $playlist->id . "' >" . $playlist->name;
 				    echo '<br>';
@@ -417,6 +413,19 @@
 		    }
 			
 	?> 
+    </div>
+    </div>
+    <div id="start-broadcasting">
+	<button id="start-button" class="btn btn-info">
+		Start Broadcasting
+	</button>
+
+</div>
+<div id="stop-broadcasting">
+	<button id="stop-button" class="btn btn-success">
+		Stop Broadcasting
+	</button>
+</div>
     <button id="logout" class="btn btn-success">Cerrar sesion
 </button>
       <footer>
