@@ -4,7 +4,7 @@ class SpotifyController extends BaseController {
 
 	public function login()
 	{
-		$session = new SpotifyWebAPI\Session('78fe14946efe45f285d840b72bea40e4', '54db8e2ab9204bc08d09da67577c3bee', 'http://localhost:8000/');
+		$session = new SpotifyWebAPI\Session('API_KEY', 'SECRET', 'http://localhost:8000/');
 		$api = new SpotifyWebAPI\SpotifyWebAPI();
 		$code = $session->getAuthorizeUrl(array('scope' => array('user-read-email', 'user-library-modify','user-read-private','playlist-read-private','playlist-modify-private','user-library-modify','user-read-email','playlist-modify-public','user-library-read','user-read-private')),true);
 		$return_value = [];
