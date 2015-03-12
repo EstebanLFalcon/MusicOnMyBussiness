@@ -7,7 +7,7 @@
 		$.ajaxSetup({ cache: true });
 		$.getScript('//connect.facebook.net/en_UK/all.js', function(){
 			FB.init({
-				appId: '394938824006318',
+				appId: 'YOUR_AP_ID',
 			});     
 			FB.getLoginStatus(function(response) {
 				statusChangeCallback(response);
